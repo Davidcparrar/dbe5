@@ -1,0 +1,91 @@
+[build-system]
+requires = ["setuptools>=42.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = []
+
+[project]
+name = "BlogDjango5"
+description = "BlogDjango5 is a simple blog using Django 5.0.6"
+version = "0.0.0"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {file = "LICENSE"}
+authors = [
+  {email = "davidc.parrar@gmail.com", name = "David Parra"}
+]
+maintainers = [
+  {email = "davidc.parrar@gmail.com", name = "David Parra"}
+]
+classifiers = [
+    "Operating System :: OS Independent",
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "django",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "ipython",
+]
+
+[tool.pytest.ini_options]
+addopts = [
+	"--nomigrations"
+]
+DJANGO_SETTINGS_MODULE = "mysite.settings"
+testpaths = [
+    "tests",
+	"*/tests/*"
+]
+
+[tool.ruff]
+line-length = 79
+exclude = [".venv", "migrations"]
+
+[tool.ruff.lint]
+select = ["E", "F", "D4", "PT", "PL"]
+ignore = ["E501", "D401", "D417","PT004", "D407", "PLR2004", "PLR0913", "PT003"]
+exclude =["__init__.py"]
+
+[tool.ruff.format]
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint.isort]
+force-wrap-aliases = true
+combine-as-imports = true
+
+[tool.coverage.run]
+omit = [
+    "*apps.py",
+    "*settings.py",
+	"*settings_test.py",
+	"*test_runner.py",
+    "*urls.py",
+    "*wsgi.py",
+    "*asgi.py",
+    "manage.py",
+    "*/migrations/*",
+    "*/tests/*",
+]
+branch = true
+
+[tool.semantic_release]
+commit_message = "build(release):{version} [skip ci]"
+
+[tool.semantic_release.branches.main]
+match = "(main|master)"
+prerelease = false
+
+[tool.semantic_release.branches.dev]
+match = "(dev|develop|development)"
+prerelease = true
+
+[tool.semantic_release.changelog]
+exclude_commit_patterns = ["Merge"]
